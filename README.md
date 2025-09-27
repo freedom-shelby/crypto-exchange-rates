@@ -62,9 +62,9 @@ crypto-exchange-rates/
     - Composer
 
 - **MySQL 8.0**
-    - Database: `webapp_db`
-    - User: `webapp_user`
-    - Password: `webapp_password`
+    - Database: `crypto_db`
+    - User: `crypto_user`
+    - Password: `crypto_password`
 
 - **Redis 7**
     - Caching and session storage
