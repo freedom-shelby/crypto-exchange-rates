@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # PHP Service
+  php:
+    build: services/php/.
+    container_name: php_app
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./logs:/var/log
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - MYSQL_HOST=mysql
+      - REDIS_HOST=redis
+      - XDEBUG_CONFIG=client_host=host.docker.internal
+    networks:
+      - webapp_network
+
+  # MySQL Service
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: crypto_rates
+      MYSQL_USER: crypto_user
+      MYSQL_PASSWORD: crypto_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    networks:
+      - webapp_network
+
+  # Redis Service
+  redis:
+    image: redis:7-alpine
+    container_name: redis_cache
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - webapp_network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  webapp_network:
+    driver: bridge
