@@ -34,8 +34,6 @@ docker-compose exec php php bin/console doctrine:migrations:migrate --no-interac
 
 5. **Access the application:**
 - **Main App:** http://localhost:8080
-- **phpMyAdmin:** http://localhost:8081
-- **Symfony Profiler:** http://localhost:8080/_profiler (dev mode)
 
 ## 🛠️ Development
 
