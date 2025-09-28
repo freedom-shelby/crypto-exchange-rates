@@ -205,32 +205,6 @@ crypto-exchange-rates/
 - **phpMyAdmin**
     - Database management interface
 
-### Development Commands
-
-```bash
-# Start services
-docker-compose up -d
-
-# View logs
-docker-compose logs -f php
-
-# Access PHP container
-docker-compose exec php bash
-
-# Run Symfony commands
-docker-compose exec php php bin/console cache:clear
-docker-compose exec php php bin/console make:controller
-
-# Install new packages
-docker-compose exec php composer require package-name
-
-# Run tests
-docker-compose exec php php bin/phpunit
-
-# Stop services
-docker-compose down
-```
-
 ### Debugging with Xdebug
 
 **VS Code Setup:**
