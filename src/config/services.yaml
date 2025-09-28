@@ -3,7 +3,10 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+
 parameters:
+    # Exchange rate provider configuration
+    app.exchange_rate.preferred_provider: '%env(EXCHANGE_RATE_PROVIDER)%'
 
 services:
     # default configuration for services in *this* file
@@ -16,5 +19,23 @@ services:
     App\:
         resource: '../src/'
 
+    # Service configurations
+    App\Controller\ExchangeRateController:
+        arguments:
+            $logger: '@monolog.logger.exchange_rates'
+
+    App\Scheduler\MainSchedule:
+        bind:
+            $updateFrequency: '%env(UPDATE_EXCHANGE_RATES_FREQUENCY)%'
+
+    App\Service\ExchangeRateProvider\ExchangeRateProviderFactory:
+        arguments:
+            $defaultProvider: '%app.exchange_rate.preferred_provider%'
+            $logger: '@monolog.logger.exchange_rates'
+
+    App\Service\ExchangeRateService:
+        arguments:
+            $logger: '@monolog.logger.exchange_rates'
+            $preferredProvider: '%app.exchange_rate.preferred_provider%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
