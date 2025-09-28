@@ -34,7 +34,11 @@ docker-compose exec php composer install
 
 ```bash
 docker-compose exec php php bin/console doctrine:database:create --if-not-exists
+```
+```bash
 docker-compose exec php php bin/console doctrine:migrations:migrate --no-interaction
+```
+```bash
 docker-compose exec php php bin/console doctrine:fixtures:load
 ```
 
@@ -144,6 +148,12 @@ Host: localhost:8080
 ```
 
 ## 🛠️ Development
+
+### ToDo List
+- Add a **caching system** with redis DB
+- Add **unit-tests**
+- Normalize DB structure (add `currency_pairs` table with relations to `currencies and `exchange_rates` tables)
+- Add more **currency pairs** and **providers**
 
 ### Project Structure
 
